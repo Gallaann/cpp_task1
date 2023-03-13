@@ -14,8 +14,9 @@ int main(int argc, char *argv[]) {
 //        return 1;
 //    }
     std::unordered_map<std::string, std::string> titles;
-    GetID(argv[1], argv[3], titles);
+    GetID(argv[1], argv[4], titles);
     GetPrimaryTitle(argv[2], titles);
+    GetLocalizedTitle(argv[3],titles);
     for (const auto &n: titles)
         print_key_value(n.first, n.second);
     return 0;

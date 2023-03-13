@@ -62,13 +62,26 @@ int GetPrimaryTitle(const std::string &file_name, std::unordered_map<std::string
     return 0;
 }
 
-int GetLocalizedTitle(std::string &file_name, std::unordered_map<std::string, std::string> &movies) {
+int GetLocalizedTitle(const std::string &file_name, std::unordered_map<std::string, std::string> &movies) {
     std::ifstream input_file(file_name);
     if (!input_file) {
         std::cerr << "Error: could not open file." << std::endl;
         return 1;
     }
-
+    std::string line;
+    while (std::getline(input_file, line)) {
+        std::stringstream cur_line(line);
+        std::string value;
+        std::getline(cur_line, value, '\t');
+        std::string movie_id = value;
+        std::getline(cur_line, value, '\t');//don't need ordering
+        std::getline(cur_line, value, '\t');
+        std::string movie_title = value;
+        std::getline(cur_line, value, '\t');
+        std::string region = value;
+        if (region == "RU" && movies.find(movie_id) != movies.end())
+            movies[movie_id] = movie_title;
+    }
     input_file.close();
     return 0;
 }
