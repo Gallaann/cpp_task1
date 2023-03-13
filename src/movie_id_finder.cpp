@@ -53,7 +53,7 @@ int GetPrimaryTitle(const std::string &file_name, std::unordered_map<std::string
         std::getline(cur_line, value, '\t'); //don't need original title
         std::getline(cur_line, value, '\t');
         std::string is_adult = value;
-        if (is_adult == "0" && movie_type == "movie")
+        if (is_adult == "0" && movie_type == "movie" && movies.find(movie_id) != movies.end())
             movies[movie_id] = movie_title;
         else
             movies.erase(movie_id);
@@ -74,7 +74,7 @@ int GetLocalizedTitle(const std::string &file_name, std::unordered_map<std::stri
         std::string value;
         std::getline(cur_line, value, '\t');
         std::string movie_id = value;
-        std::getline(cur_line, value, '\t');//don't need ordering
+        std::getline(cur_line, value, '\t'); //don't need ordering
         std::getline(cur_line, value, '\t');
         std::string movie_title = value;
         std::getline(cur_line, value, '\t');
