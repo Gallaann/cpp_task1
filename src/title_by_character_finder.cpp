@@ -10,7 +10,7 @@
 
 #include "title_by_character_finder.h"
 
-int MovieTitles::GetID(const std::string &path, const std::string &character_name) {
+int MovieTitles::ParseID(const std::string &path, const std::string &character_name) {
     std::ifstream input_file(path);
     if (!input_file) {
         std::cerr << "Error: could not open file." << std::endl;
@@ -33,7 +33,7 @@ int MovieTitles::GetID(const std::string &path, const std::string &character_nam
     return 0;
 }
 
-int MovieTitles::GetPrimaryTitle(const std::string &path) {
+int MovieTitles::ParsePrimaryTitle(const std::string &path) {
     std::ifstream input_file(path);
     if (!input_file) {
         std::cerr << "Error: could not open file." << std::endl;
@@ -61,7 +61,7 @@ int MovieTitles::GetPrimaryTitle(const std::string &path) {
     return 0;
 }
 
-int MovieTitles::GetLocalizedTitle(const std::string &path) {
+int MovieTitles::ParseLocalizedTitle(const std::string &path) {
     std::ifstream input_file(path);
     if (!input_file) {
         std::cerr << "Error: could not open file." << std::endl;

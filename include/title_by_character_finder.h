@@ -9,11 +9,11 @@ class MovieTitles {
 private:
     std::unordered_map<std::string, std::string> titles;
 public:
-    int GetID(const std::string &path, const std::string &character_name);
+    int ParseID(const std::string &path, const std::string &character_name);
 
-    int GetPrimaryTitle(const std::string &path);
+    int ParsePrimaryTitle(const std::string &path);
 
-    int GetLocalizedTitle(const std::string &path);
+    int ParseLocalizedTitle(const std::string &path);
 
     void PrintResult();
 };

@@ -9,9 +9,9 @@ int main(int argc, char *argv[]) {
         return 1;
     }
     MovieTitles movie_titles;
-    movie_titles.GetID(argv[1], argv[4]);
-    movie_titles.GetPrimaryTitle(argv[2]);
-    movie_titles.GetLocalizedTitle(argv[3]);
+    movie_titles.ParseID(argv[1], argv[4]);
+    movie_titles.ParsePrimaryTitle(argv[2]);
+    movie_titles.ParseLocalizedTitle(argv[3]);
     movie_titles.PrintResult();
     return 0;
 }
