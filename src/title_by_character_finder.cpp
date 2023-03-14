@@ -8,11 +8,10 @@
 #include <sstream>
 #include <unordered_map>
 
-#include "movie_id_finder.h"
+#include "title_by_character_finder.h"
 
-int GetID(const std::string &file_name, const std::string &character_name,
-          std::unordered_map<std::string, std::string> &movies) {
-    std::ifstream input_file(file_name);
+int MovieTitles::GetID(const std::string &path, const std::string &character_name) {
+    std::ifstream input_file(path);
     if (!input_file) {
         std::cerr << "Error: could not open file." << std::endl;
         return 1;
@@ -28,14 +27,14 @@ int GetID(const std::string &file_name, const std::string &character_name,
             name = value;
         }
         if (name.find(character_name) != std::string::npos)
-            movies[movie_id];
+            titles[movie_id];
     }
     input_file.close();
     return 0;
 }
 
-int GetPrimaryTitle(const std::string &file_name, std::unordered_map<std::string, std::string> &movies) {
-    std::ifstream input_file(file_name);
+int MovieTitles::GetPrimaryTitle(const std::string &path) {
+    std::ifstream input_file(path);
     if (!input_file) {
         std::cerr << "Error: could not open file." << std::endl;
         return 1;
@@ -53,17 +52,17 @@ int GetPrimaryTitle(const std::string &file_name, std::unordered_map<std::string
         std::getline(cur_line, value, '\t'); //don't need original title
         std::getline(cur_line, value, '\t');
         std::string is_adult = value;
-        if (is_adult == "0" && movie_type == "movie" && movies.find(movie_id) != movies.end())
-            movies[movie_id] = movie_title;
+        if (is_adult == "0" && movie_type == "movie" && titles.find(movie_id) != titles.end())
+            titles[movie_id] = movie_title;
         else
-            movies.erase(movie_id);
+            titles.erase(movie_id);
     }
     input_file.close();
     return 0;
 }
 
-int GetLocalizedTitle(const std::string &file_name, std::unordered_map<std::string, std::string> &movies) {
-    std::ifstream input_file(file_name);
+int MovieTitles::GetLocalizedTitle(const std::string &path) {
+    std::ifstream input_file(path);
     if (!input_file) {
         std::cerr << "Error: could not open file." << std::endl;
         return 1;
@@ -79,9 +78,14 @@ int GetLocalizedTitle(const std::string &file_name, std::unordered_map<std::stri
         std::string movie_title = value;
         std::getline(cur_line, value, '\t');
         std::string region = value;
-        if (region == "RU" && movies.find(movie_id) != movies.end())
-            movies[movie_id] = movie_title;
+        if (region == "RU" && titles.find(movie_id) != titles.end())
+            titles[movie_id] = movie_title;
     }
     input_file.close();
     return 0;
+}
+
+void MovieTitles::PrintResult() {
+    for (const auto &container: titles)
+        std::cout << container.second << "\n";
 }
