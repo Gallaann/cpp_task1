@@ -152,10 +152,10 @@ void MovieTitles::PrintResult() {
         std::cout << container.second << "\n";
 }
 
-bool MovieTitles::FindColumns(std::string header_line, std::unordered_map<std::string, int> &some_map) {
+bool MovieTitles::FindColumns(std::string &header_line, std::unordered_map<std::string, int> &some_map) {
     std::string value;
-    std::size_t i = 0;
-    std::size_t number_of_columns = some_map.size();
+    int i = 0;
+    auto number_of_columns = some_map.size();
     std::stringstream ss_header_line(header_line);
     while (std::getline(ss_header_line, value, '\t')) {
         if (some_map.find(value) != some_map.end()) {
@@ -164,8 +164,5 @@ bool MovieTitles::FindColumns(std::string header_line, std::unordered_map<std::s
         }
         i++;
     }
-    if (number_of_columns != 0) {
-        return false;
-    }
-    return true;
+    return number_of_columns == 0;
 }

@@ -19,7 +19,7 @@ public:
 
     void PrintResult();
 
-    bool FindColumns(std::string header_line, std::unordered_map<std::string, int> &some_map);
+    bool static FindColumns(std::string &header_line, std::unordered_map<std::string, int> &some_map);
 };
 
 #endif //TASK1_TITLE_BY_CHARACTER_FINDER_H
