@@ -11,15 +11,15 @@ class MovieTitles {
 private:
     std::unordered_map<std::string, std::string> titles;
 public:
-    int ParseID(const std::string &path, const std::string &character_name);
+    bool ParseID(const std::string &path, const std::string &character_name);
 
-    int ParsePrimaryTitle(const std::string &path);
+    bool ParsePrimaryTitle(const std::string &path);
 
-    int ParseLocalizedTitle(const std::string &path);
+    bool ParseLocalizedTitle(const std::string &path);
 
     void PrintResult();
-};
 
-bool FindColumns(std::stringstream header_line, std::unordered_map<std::string, int> some_map);
+    bool FindColumns(std::string header_line, std::unordered_map<std::string, int> &some_map);
+};
 
 #endif //TASK1_TITLE_BY_CHARACTER_FINDER_H
