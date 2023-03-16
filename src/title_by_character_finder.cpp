@@ -34,13 +34,16 @@ int MovieTitles::ParseID(const std::string &path, const std::string &character_n
 }
 
 int MovieTitles::ParsePrimaryTitle(const std::string &path) {
+    if (titles.empty()) {
+        return 1;
+    }
     std::ifstream input_file(path);
     if (!input_file) {
         std::cerr << "Error: could not open file." << std::endl;
         return 1;
     }
     std::string line;
-    while (std::getline(input_file, line)) {
+    while (std::getline(input_file, line) && !titles.empty()) {
         std::stringstream cur_line(line);
         std::string value;
         std::getline(cur_line, value, '\t');
@@ -62,6 +65,9 @@ int MovieTitles::ParsePrimaryTitle(const std::string &path) {
 }
 
 int MovieTitles::ParseLocalizedTitle(const std::string &path) {
+    if (titles.empty()) {
+        return 1;
+    }
     std::ifstream input_file(path);
     if (!input_file) {
         std::cerr << "Error: could not open file." << std::endl;
@@ -88,4 +94,21 @@ int MovieTitles::ParseLocalizedTitle(const std::string &path) {
 void MovieTitles::PrintResult() {
     for (const auto &container: titles)
         std::cout << container.second << "\n";
+}
+
+bool FindColumns(std::stringstream header_line, std::unordered_map<std::string, int> some_map) {
+    std::string value;
+    std::size_t i = 0;
+    std::size_t number_of_columns = some_map.size();
+    while (std::getline(header_line, value, '\t')) {
+        if (some_map.find(value) != some_map.end()) {
+            some_map[value] = i;
+            number_of_columns--;
+        }
+        i++;
+    }
+    if (number_of_columns != 0) {
+        return false;
+    }
+    return true;
 }
