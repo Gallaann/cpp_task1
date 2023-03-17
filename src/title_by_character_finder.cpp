@@ -41,7 +41,7 @@ bool MovieTitles::ParseID(const std::string &path, const std::string &character_
             }
             i++;
         }
-        if (name.find(character_name) != std::string::npos)
+        if (name.find("\"" + character_name + "\"") != std::string::npos)
             titles[movie_id];
     }
 
