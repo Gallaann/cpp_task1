@@ -129,7 +129,7 @@ bool MovieTitles::ParseLocalizedTitle(const std::string &path) {
         std::string movie_title;
         std::string movie_region;
         while (std::getline(cur_line, value, '\t')) {
-            if (i == column_map["titleID"]) {
+            if (i == column_map["titleId"]) {
                 movie_id = value;
             }
             if (i == column_map["title"]) {
@@ -148,8 +148,12 @@ bool MovieTitles::ParseLocalizedTitle(const std::string &path) {
 }
 
 void MovieTitles::PrintResult() {
+    if (titles.empty()) {
+        std::cerr << "No results found." << std::endl;
+        return;
+    }
     for (const auto &container: titles)
-        std::cout << container.second << "\n";
+        std::cout << container.second << std::endl;
 }
 
 bool MovieTitles::FindColumns(std::string &header_line, std::unordered_map<std::string, int> &some_map) {
