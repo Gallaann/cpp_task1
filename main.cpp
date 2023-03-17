@@ -4,7 +4,7 @@
 #include "title_by_character_finder.h"
 
 int main(int argc, char *argv[]) {
-    if (argc < 4) {
+    if (argc != 5) {
         std::cerr << "Usage: " << argv[0] << " <file1> <file2> <file3> <name>" << std::endl;
         return 1;
     }
