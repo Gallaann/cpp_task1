@@ -17,7 +17,7 @@ public:
 
     bool ParseLocalizedTitle(const std::string &path);
 
-    void PrintResult();
+    void PrintResult() const;
 
     bool static FindColumns(std::string &header_line, std::unordered_map<std::string, int> &some_map);
 };

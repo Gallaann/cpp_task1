@@ -147,7 +147,7 @@ bool MovieTitles::ParseLocalizedTitle(const std::string &path) {
     return true;
 }
 
-void MovieTitles::PrintResult() {
+void MovieTitles::PrintResult() const{
     if (titles.empty()) {
         std::cerr << "No results found." << std::endl;
         return;
