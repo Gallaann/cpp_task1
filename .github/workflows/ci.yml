@@ -29,8 +29,24 @@ jobs:
 
       - name: run clang-tidy
         uses: cpp-linter/cpp-linter-action@v2.4.2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           style: file
           extra-args: -std=c++17
+
+  build:
+    needs: [ cppcheck, clang-tidy ]
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+
+      - name: build
+        run: cmake -B ./build
+
+      - name: upload-artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-artifact
+          path: .
