@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  push:
+    branches: [ develop ]
+
+env:
+  BUILD_TYPE: Debug
+
+jobs:
+  cppcheck:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+
+      - name: run cppcheck
+        uses: deep5050/cppcheck-action@v3.0
+        with:
+          std: c++17
+        run: cppcheck main.cpp src/title_by_character_finder.cpp
+
+  clang-tidy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: run clang-tidy
+        uses: cpp-linter/cpp-linter-action@v2.4.2
+        with:
+          style: file

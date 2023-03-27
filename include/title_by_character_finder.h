@@ -9,7 +9,7 @@
 
 class MovieTitles {
 private:
-    std::unordered_map<std::string, std::string> titles;
+    std::unordered_map<std::string, std::string> m_titles;
 public:
     bool ParseID(const std::string &path, const std::string &character_name);
 

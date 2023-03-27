@@ -41,8 +41,9 @@ bool MovieTitles::ParseID(const std::string &path, const std::string &character_
             }
             i++;
         }
-        if (name.find("\"" + character_name + "\"") != std::string::npos)
-            titles[movie_id];
+        if (name.find(character_name) != std::string::npos) {
+            m_titles[movie_id];
+        }
     }
 
     input_file.close();
@@ -50,7 +51,7 @@ bool MovieTitles::ParseID(const std::string &path, const std::string &character_
 }
 
 bool MovieTitles::ParsePrimaryTitle(const std::string &path) {
-    if (titles.empty()) {
+    if (m_titles.empty()) {
         return false;
     }
     std::ifstream input_file(path);
@@ -70,7 +71,7 @@ bool MovieTitles::ParsePrimaryTitle(const std::string &path) {
         return false;
     }
 
-    while (std::getline(input_file, line) && !titles.empty()) {
+    while (std::getline(input_file, line) && !m_titles.empty()) {
         std::stringstream cur_line(line);
         std::string value;
         std::size_t i = 0;
@@ -93,17 +94,18 @@ bool MovieTitles::ParsePrimaryTitle(const std::string &path) {
             }
             i++;
         }
-        if (is_adult == "0" && movie_type == "movie" && titles.find(movie_id) != titles.end())
-            titles[movie_id] = movie_title;
-        else
-            titles.erase(movie_id);
+        if (is_adult == "0" && movie_type == "movie" && m_titles.find(movie_id) != m_titles.end()) {
+            m_titles[movie_id] = movie_title;
+        } else {
+            m_titles.erase(movie_id);
+        }
     }
     input_file.close();
     return true;
 }
 
 bool MovieTitles::ParseLocalizedTitle(const std::string &path) {
-    if (titles.empty()) {
+    if (m_titles.empty()) {
         return false;
     }
     std::ifstream input_file(path);
@@ -121,7 +123,7 @@ bool MovieTitles::ParseLocalizedTitle(const std::string &path) {
         return false;
     }
 
-    while (std::getline(input_file, line) && !titles.empty()) {
+    while (std::getline(input_file, line) && !m_titles.empty()) {
         std::stringstream cur_line(line);
         std::string value;
         std::size_t i = 0;
@@ -140,20 +142,22 @@ bool MovieTitles::ParseLocalizedTitle(const std::string &path) {
             }
             i++;
         }
-        if (movie_region == "RU" && titles.find(movie_id) != titles.end())
-            titles[movie_id] = movie_title;
+        if (movie_region == "RU" && m_titles.find(movie_id) != m_titles.end()) {
+            m_titles[movie_id] = movie_title;
+        }
     }
     input_file.close();
     return true;
 }
 
 void MovieTitles::PrintResult() const {
-    if (titles.empty()) {
+    if (m_titles.empty()) {
         std::cerr << "No results found." << std::endl;
         return;
     }
-    for (const auto &container: titles)
+    for (const auto &container: m_titles) {
         std::cout << container.second << std::endl;
+    }
 }
 
 bool MovieTitles::FindColumns(std::string &header_line, std::unordered_map<std::string, int> &some_map) {
