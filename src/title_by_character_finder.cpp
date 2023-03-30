@@ -8,7 +8,7 @@
 #include <sstream>
 #include <unordered_map>
 
-#include "title_by_character_finder.h"
+#include <title_by_character_finder.h>
 
 bool MovieTitles::ParseID(const std::string &path, const std::string &character_name) {
     std::ifstream input_file(path);
@@ -41,7 +41,7 @@ bool MovieTitles::ParseID(const std::string &path, const std::string &character_
             }
             i++;
         }
-        if (name.find(character_name) != std::string::npos) {
+        if (name.find("\"" + character_name + "\"") != std::string::npos) {
             m_titles[movie_id];
         }
     }
@@ -173,4 +173,15 @@ bool MovieTitles::FindColumns(std::string &header_line, std::unordered_map<std::
         i++;
     }
     return number_of_columns == 0;
+}
+
+bool OpenFile(std::stringstream string_stream, std::string path_to_file){
+    std::ifstream input_file(path_to_file);
+    if (!input_file) {
+        std::cerr << "Error: could not open file." << std::endl;
+        return false;
+    }
+    string_stream << input_file.rdbuf();
+    input_file.close();
+    return true
 }

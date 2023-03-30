@@ -10,6 +10,9 @@
 class MovieTitles {
 private:
     std::unordered_map<std::string, std::string> m_titles;
+
+    bool OpenFile(std::stringstream string_stream, std::string path_to_file);
+
 public:
     bool ParseID(const std::string &path, const std::string &character_name);
 

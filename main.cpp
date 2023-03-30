@@ -1,7 +1,7 @@
 #include <iostream>
 #include <unordered_map>
 
-#include "title_by_character_finder.h"
+#include <title_by_character_finder.h>
 
 int main(int argc, char *argv[]) {
     if (argc != 5) {
