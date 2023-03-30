@@ -175,7 +175,7 @@ bool MovieTitles::FindColumns(std::string &header_line, std::unordered_map<std::
     return number_of_columns == 0;
 }
 
-bool OpenFile(std::stringstream string_stream, std::string path_to_file){
+bool MovieTitles::OpenFile(std::stringstream string_stream, std::string &path_to_file) {
     std::ifstream input_file(path_to_file);
     if (!input_file) {
         std::cerr << "Error: could not open file." << std::endl;
@@ -183,5 +183,5 @@ bool OpenFile(std::stringstream string_stream, std::string path_to_file){
     }
     string_stream << input_file.rdbuf();
     input_file.close();
-    return true
+    return true;
 }
