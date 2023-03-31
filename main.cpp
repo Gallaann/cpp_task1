@@ -1,6 +1,6 @@
-#include <iostream>
+#include "title_by_character_finder.h"
 
-#include <title_by_character_finder.h>
+#include <iostream>
 
 int main(int argc, char *argv[]) {
     if (argc != 5) {

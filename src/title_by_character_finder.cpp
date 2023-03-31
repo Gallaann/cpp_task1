@@ -8,25 +8,23 @@
 #include <sstream>
 #include <unordered_map>
 
-#include <title_by_character_finder.h>
+#include "title_by_character_finder.h"
 
 bool MovieTitles::ParseID(const std::string &path, const std::string &character_name) {
-    std::ifstream input_file(path);
-    if (!input_file) {
-        std::cerr << "Error: could not open file." << std::endl;
-        return false;
-    }
+    std::stringstream input_stream;
+    getInputStream(input_stream, path);
 
-    std::string line;
-    std::getline(input_file, line);
     std::unordered_map<std::string, int> column_map = {{"characters", 0},
                                                        {"tconst",     0}};
+    std::string line;
+    std::getline(input_stream, line);
+
     if (!findColumns(line, column_map)) {
         std::cerr << "Error: not enough columns in file." << std::endl;
         return false;
     }
 
-    while (std::getline(input_file, line)) {
+    while (std::getline(input_stream, line)) {
         std::stringstream cur_line(line);
         std::string value;
         std::size_t i = 0;
@@ -54,19 +52,21 @@ bool MovieTitles::ParsePrimaryTitle(const std::string &path) {
         return false;
     }
 
+    std::stringstream input_stream;
+    getInputStream(input_stream, path);
 
-    std::string line;
-    std::getline(input_file, line);
     std::unordered_map<std::string, int> column_map = {{"tconst",       0},
                                                        {"isAdult",      0},
                                                        {"titleType",    0},
                                                        {"primaryTitle", 0}};
+    std::string line;
+    std::getline(input_stream, line);
     if (!findColumns(line, column_map)) {
         std::cerr << "Error: not enough columns in file." << std::endl;
         return false;
     }
 
-    while (std::getline(input_file, line) && !m_titles.empty()) {
+    while (std::getline(input_stream, line) && !m_titles.empty()) {
         std::stringstream cur_line(line);
         std::string value;
         std::size_t i = 0;
@@ -102,22 +102,21 @@ bool MovieTitles::ParseLocalizedTitle(const std::string &path) {
     if (m_titles.empty()) {
         return false;
     }
-    std::ifstream input_file(path);
-    if (!input_file) {
-        std::cerr << "Error: could not open file." << std::endl;
-        return false;
-    }
-    std::string line;
-    std::getline(input_file, line);
+
+    std::stringstream input_stream;
+    getInputStream(input_stream, path);
+
     std::unordered_map<std::string, int> column_map = {{"titleId", 0},
                                                        {"title",   0},
                                                        {"region",  0}};
-    if (!findColumns(std::stringstream(line), column_map)) {
+    std::string line;
+    std::getline(input_stream, line);
+    if (!findColumns(line, column_map)) {
         std::cerr << "Error: not enough columns in file." << std::endl;
         return false;
     }
 
-    while (std::getline(input_file, line) && !m_titles.empty()) {
+    while (std::getline(input_stream, line) && !m_titles.empty()) {
         std::stringstream cur_line(line);
         std::string value;
         std::size_t i = 0;
@@ -153,11 +152,12 @@ void MovieTitles::PrintResult() const {
     }
 }
 
-bool MovieTitles::findColumns(std::stringstream &columns_naming_line, std::unordered_map<std::string, int> &column_names_map) {
+bool MovieTitles::findColumns(std::string &columns_naming_line, std::unordered_map<std::string, int> &column_names_map) {
     int index_of_column = 0;
     auto number_of_columns_to_find = column_names_map.size();
     std::string column_name;
-    while (std::getline(columns_naming_line, column_name, '\t')) {
+    std::stringstream columns_naming_line_stream(columns_naming_line);
+    while (std::getline(columns_naming_line_stream, column_name, '\t')) {
         if (column_names_map.find(column_name) != column_names_map.end()) {
             column_names_map[column_name] = index_of_column;
             number_of_columns_to_find--;

@@ -7,6 +7,7 @@
 
 #include <vector>
 #include <unordered_map>
+#include <string>
 
 class MovieTitles {
 public:
@@ -18,7 +19,7 @@ public:
 
     void PrintResult() const;
 
-    bool static findColumns(std::stringstream &columns_naming_line, std::unordered_map<std::string, int> &column_names_map);
+    bool static findColumns(std::string &columns_naming_line, std::unordered_map<std::string, int> &column_names_map);
 
 private:
     std::unordered_map<std::string, std::string> m_titles;
