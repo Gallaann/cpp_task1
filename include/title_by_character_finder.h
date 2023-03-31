@@ -23,8 +23,7 @@ public:
 private:
     std::unordered_map<std::string, std::string> m_titles;
 
-    bool static OpenFile(std::stringstream &string_stream, const std::string &path_to_file);
-
+    bool static getInputStream(std::stringstream &input_stream, const std::string &path_to_file);
 };
 
 #endif //TASK1_TITLE_BY_CHARACTER_FINDER_H

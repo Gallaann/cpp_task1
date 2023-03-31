@@ -53,11 +53,7 @@ bool MovieTitles::ParsePrimaryTitle(const std::string &path) {
     if (m_titles.empty()) {
         return false;
     }
-    std::ifstream input_file(path);
-    if (!input_file) {
-        std::cerr << "Error: could not open file." << std::endl;
-        return false;
-    }
+
 
     std::string line;
     std::getline(input_file, line);
@@ -172,12 +168,12 @@ bool MovieTitles::FindColumns(std::string &header_line, std::unordered_map<std::
     return number_of_columns == 0;
 }
 
-bool MovieTitles::OpenFile(std::stringstream &string_stream, std::string &path_to_file) {
-    std::ifstream input_file(path_to_file);
-    if (!input_file) {
+bool MovieTitles::getInputStream(std::stringstream &input_stream, const std::string &path_to_file) {
+    std::ifstream input_file_stream(path_to_file);
+    if (!input_file_stream) {
         std::cerr << "Error: could not open file." << std::endl;
         return false;
     }
-    string_stream << input_file.rdbuf();
+    input_stream << input_file_stream.rdbuf();
     return true;
 }
