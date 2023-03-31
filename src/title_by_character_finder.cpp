@@ -19,8 +19,8 @@ bool MovieTitles::ParseID(const std::string &path, const std::string &character_
     std::string line;
     std::getline(input_stream, line);
 
-    if (!findColumns(line, column_map)) {
-        std::cerr << "Error: not enough columns in file." << std::endl;
+    if (!findColumnsIndexes(line, column_map)) {
+        std::cerr << "Error: not enough columns in file" << std::endl;
         return false;
     }
 
@@ -61,8 +61,8 @@ bool MovieTitles::ParsePrimaryTitle(const std::string &path) {
                                                        {"primaryTitle", 0}};
     std::string line;
     std::getline(input_stream, line);
-    if (!findColumns(line, column_map)) {
-        std::cerr << "Error: not enough columns in file." << std::endl;
+    if (!findColumnsIndexes(line, column_map)) {
+        std::cerr << "Error: not enough columns in file" << std::endl;
         return false;
     }
 
@@ -111,8 +111,8 @@ bool MovieTitles::ParseLocalizedTitle(const std::string &path) {
                                                        {"region",  0}};
     std::string line;
     std::getline(input_stream, line);
-    if (!findColumns(line, column_map)) {
-        std::cerr << "Error: not enough columns in file." << std::endl;
+    if (!findColumnsIndexes(line, column_map)) {
+        std::cerr << "Error: not enough columns in file" << std::endl;
         return false;
     }
 
@@ -152,7 +152,7 @@ void MovieTitles::PrintResult() const {
     }
 }
 
-bool MovieTitles::findColumns(std::string &columns_naming_line, std::unordered_map<std::string, int> &column_names_map) {
+bool MovieTitles::findColumnsIndexes(std::string &columns_naming_line, std::unordered_map<std::string, int> &column_names_map) {
     int index_of_column = 0;
     auto number_of_columns_to_find = column_names_map.size();
     std::string column_name;
@@ -170,7 +170,7 @@ bool MovieTitles::findColumns(std::string &columns_naming_line, std::unordered_m
 bool MovieTitles::getInputStream(std::stringstream &input_stream, const std::string &path_to_file) {
     std::ifstream input_file_stream(path_to_file);
     if (!input_file_stream) {
-        std::cerr << "Error: could not open file." << std::endl;
+        std::cerr << "Error: could not open file" << std::endl;
         return false;
     }
     input_stream << input_file_stream.rdbuf();
