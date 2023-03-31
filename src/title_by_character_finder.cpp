@@ -21,7 +21,7 @@ bool MovieTitles::ParseID(const std::string &path, const std::string &character_
     std::getline(input_file, line);
     std::unordered_map<std::string, int> column_map = {{"characters", 0},
                                                        {"tconst",     0}};
-    if (!FindColumns(line, column_map)) {
+    if (!findColumns(line, column_map)) {
         std::cerr << "Error: not enough columns in file." << std::endl;
         return false;
     }
@@ -61,7 +61,7 @@ bool MovieTitles::ParsePrimaryTitle(const std::string &path) {
                                                        {"isAdult",      0},
                                                        {"titleType",    0},
                                                        {"primaryTitle", 0}};
-    if (!FindColumns(line, column_map)) {
+    if (!findColumns(line, column_map)) {
         std::cerr << "Error: not enough columns in file." << std::endl;
         return false;
     }
@@ -112,7 +112,7 @@ bool MovieTitles::ParseLocalizedTitle(const std::string &path) {
     std::unordered_map<std::string, int> column_map = {{"titleId", 0},
                                                        {"title",   0},
                                                        {"region",  0}};
-    if (!FindColumns(line, column_map)) {
+    if (!findColumns(std::stringstream(line), column_map)) {
         std::cerr << "Error: not enough columns in file." << std::endl;
         return false;
     }
@@ -153,19 +153,18 @@ void MovieTitles::PrintResult() const {
     }
 }
 
-bool MovieTitles::FindColumns(std::string &header_line, std::unordered_map<std::string, int> &some_map) {
-    std::string value;
-    int i = 0;
-    auto number_of_columns = some_map.size();
-    std::stringstream ss_header_line(header_line);
-    while (std::getline(ss_header_line, value, '\t')) {
-        if (some_map.find(value) != some_map.end()) {
-            some_map[value] = i;
-            number_of_columns--;
+bool MovieTitles::findColumns(std::stringstream &columns_naming_line, std::unordered_map<std::string, int> &column_names_map) {
+    int index_of_column = 0;
+    auto number_of_columns_to_find = column_names_map.size();
+    std::string column_name;
+    while (std::getline(columns_naming_line, column_name, '\t')) {
+        if (column_names_map.find(column_name) != column_names_map.end()) {
+            column_names_map[column_name] = index_of_column;
+            number_of_columns_to_find--;
         }
-        i++;
+        index_of_column++;
     }
-    return number_of_columns == 0;
+    return number_of_columns_to_find == 0;
 }
 
 bool MovieTitles::getInputStream(std::stringstream &input_stream, const std::string &path_to_file) {
