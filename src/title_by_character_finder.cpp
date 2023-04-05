@@ -2,13 +2,13 @@
 // Created by gallaann on 12.03.23.
 //
 
+#include "title_by_character_finder.h"
+
 #include <fstream>
 #include <iostream>
-#include <vector>
 #include <sstream>
 #include <unordered_map>
-
-#include "title_by_character_finder.h"
+#include <vector>
 
 bool MovieTitles::ParseID(const std::string &path, const std::string &character_name) {
     std::stringstream input_stream;

@@ -5,9 +5,9 @@
 #ifndef TASK1_TITLE_BY_CHARACTER_FINDER_H
 #define TASK1_TITLE_BY_CHARACTER_FINDER_H
 
-#include <vector>
-#include <unordered_map>
 #include <string>
+#include <unordered_map>
+#include <vector>
 
 class MovieTitles {
 public:
