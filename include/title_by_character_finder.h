@@ -5,17 +5,18 @@
 #ifndef TASK1_TITLE_BY_CHARACTER_FINDER_H
 #define TASK1_TITLE_BY_CHARACTER_FINDER_H
 
+#include <filesystem>
 #include <string>
 #include <unordered_map>
 #include <vector>
 
 class MovieTitles {
 public:
-    bool ParseID(const std::string &path, const std::string &character_name);
+    bool ParseID(const std::filesystem::path &path, const std::string &character_name);
 
-    bool ParsePrimaryTitle(const std::string &path);
+    bool ParsePrimaryTitle(const std::filesystem::path &path);
 
-    bool ParseLocalizedTitle(const std::string &path);
+    bool ParseLocalizedTitle(const std::filesystem::path &path);
 
     void PrintResult() const;
 
@@ -24,7 +25,7 @@ public:
 private:
     std::unordered_map<std::string, std::string> m_titles;
 
-    bool static getInputStream(std::stringstream &input_stream, const std::string &path_to_file);
+    bool static getInputStream(std::stringstream &input_stream, const std::filesystem::path &path_to_file);
 };
 
 #endif //TASK1_TITLE_BY_CHARACTER_FINDER_H

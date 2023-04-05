@@ -4,13 +4,14 @@
 
 #include "title_by_character_finder.h"
 
+#include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <sstream>
 #include <unordered_map>
 #include <vector>
 
-bool MovieTitles::ParseID(const std::string &path, const std::string &character_name) {
+bool MovieTitles::ParseID(const std::filesystem::path &path, const std::string &character_name) {
     std::stringstream input_stream;
     getInputStream(input_stream, path);
 
@@ -47,7 +48,7 @@ bool MovieTitles::ParseID(const std::string &path, const std::string &character_
     return true;
 }
 
-bool MovieTitles::ParsePrimaryTitle(const std::string &path) {
+bool MovieTitles::ParsePrimaryTitle(const std::filesystem::path &path) {
     if (m_titles.empty()) {
         return false;
     }
@@ -98,7 +99,7 @@ bool MovieTitles::ParsePrimaryTitle(const std::string &path) {
     return true;
 }
 
-bool MovieTitles::ParseLocalizedTitle(const std::string &path) {
+bool MovieTitles::ParseLocalizedTitle(const std::filesystem::path &path) {
     if (m_titles.empty()) {
         return false;
     }
@@ -167,7 +168,7 @@ bool MovieTitles::findColumns(std::string &columns_naming_line, std::unordered_m
     return number_of_columns_to_find == 0;
 }
 
-bool MovieTitles::getInputStream(std::stringstream &input_stream, const std::string &path_to_file) {
+bool MovieTitles::getInputStream(std::stringstream &input_stream, const std::filesystem::path &path_to_file) {
     std::ifstream input_file_stream(path_to_file);
     if (!input_file_stream) {
         std::cerr << "Error: could not open file." << std::endl;
