@@ -12,6 +12,7 @@
 
 class MovieTitles {
 public:
+    void findLocalizedMoviesTitlesByCharacterName(int argc, char *argv[]);
     bool findMovieIdByCharacterName(const std::filesystem::path &path, const std::string &characterName);
     bool findPrimaryTitleForMovies(const std::filesystem::path &path);
     bool findLocalizedTitleForMovies(const std::filesystem::path &path);

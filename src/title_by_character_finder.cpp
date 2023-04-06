@@ -29,6 +29,17 @@ namespace {
                                                             {"region",  kNotFound}};
 };
 
+void MovieTitles::findLocalizedMoviesTitlesByCharacterName(int argc, char **argv) {
+    if (argc != 5) {
+        std::cerr << "Usage: " << argv[0] << " <file1> <file2> <file3> <name>" << std::endl;
+    }
+
+    findMovieIdByCharacterName(argv[1], argv[4]);
+    findPrimaryTitleForMovies(argv[2]);
+    findLocalizedTitleForMovies(argv[3]);
+    printResult();
+}
+
 bool MovieTitles::findMovieIdByCharacterName(const std::filesystem::path &path, const std::string &characterName) {
     std::stringstream inputStream;
     getInputStream(inputStream, path);
