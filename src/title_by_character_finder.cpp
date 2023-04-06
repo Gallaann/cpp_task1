@@ -33,7 +33,7 @@ bool MovieTitles::ParseID(const std::filesystem::path &path, const std::string &
     std::getline(input_stream, line);
 
     if (!findColumns(line, principals_column_map)) {
-        std::cerr << "Error: not enough columns in file." << std::endl;
+        std::cerr << "Error: not enough columns in file" << std::endl;
         return false;
     }
 
@@ -52,7 +52,7 @@ bool MovieTitles::ParseID(const std::filesystem::path &path, const std::string &
             }
             ++i;
         }
-        if (name.find("\"" + character_name + "\"") != std::string::npos) {
+        if (name.find("\"" + character_name + "\"") != std::string::npos) { //character names represented in files as ["name1", "name2", etc.]
             m_titles[movie_id];
         }
     }
@@ -71,7 +71,7 @@ bool MovieTitles::ParsePrimaryTitle(const std::filesystem::path &path) {
     std::string line;
     std::getline(input_stream, line);
     if (!findColumns(line, basics_column_map)) {
-        std::cerr << "Error: not enough columns in file." << std::endl;
+        std::cerr << "Error: not enough columns in file" << std::endl;
         return false;
     }
 
@@ -118,7 +118,7 @@ bool MovieTitles::ParseLocalizedTitle(const std::filesystem::path &path) {
     std::string line;
     std::getline(input_stream, line);
     if (!findColumns(line, akas_column_map)) {
-        std::cerr << "Error: not enough columns in file." << std::endl;
+        std::cerr << "Error: not enough columns in file" << std::endl;
         return false;
     }
 
@@ -177,7 +177,7 @@ MovieTitles::findColumns(std::string &columns_naming_line, std::unordered_map<st
 bool MovieTitles::getInputStream(std::stringstream &input_stream, const std::filesystem::path &path_to_file) {
     std::ifstream input_file_stream(path_to_file);
     if (!input_file_stream) {
-        std::cerr << "Error: could not open file." << std::endl;
+        std::cerr << "Error: could not open file" << std::endl;
         return false;
     }
     input_stream << input_file_stream.rdbuf();
