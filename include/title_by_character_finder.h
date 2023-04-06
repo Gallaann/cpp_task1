@@ -15,11 +15,11 @@ public:
     bool findMovieIdByCharacterName(const std::filesystem::path &path, const std::string &characterName);
     bool findPrimaryTitleForMovies(const std::filesystem::path &path);
     bool findLocalizedTitleForMovies(const std::filesystem::path &path);
-    void printResult() const;
-    bool static findColumns(std::string &columns_naming_line, std::unordered_map<std::string, int> &columnNamesMap);
+    void printResult();
+    bool findColumns(std::string &columns_naming_line, std::unordered_map<std::string, int> &columnNamesMap);
 
 private:
-    bool static getInputStream(std::stringstream &input_stream, const std::filesystem::path &path);
+    bool getInputStream(std::stringstream &input_stream, const std::filesystem::path &path);
 
     std::unordered_map<std::string, std::string> m_titles;
 };

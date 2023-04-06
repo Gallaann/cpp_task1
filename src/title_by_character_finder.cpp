@@ -152,7 +152,7 @@ bool MovieTitles::findLocalizedTitleForMovies(const std::filesystem::path &path)
     return true;
 }
 
-void MovieTitles::printResult() const {
+void MovieTitles::printResult() {
     if (m_titles.empty()) {
         std::cerr << "No results found" << std::endl;
         return;
