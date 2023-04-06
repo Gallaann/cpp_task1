@@ -9,7 +9,6 @@
 #include <iostream>
 #include <sstream>
 #include <unordered_map>
-#include <vector>
 
 enum{
     kNotFound = -1
@@ -55,17 +54,15 @@ bool MovieTitles::findMovieIdByCharacterName(const std::filesystem::path &path, 
     while (std::getline(inputStream, line)) {
         std::stringstream currentLine(line);
         std::string value;
-        std::size_t i = 0;
         std::string movieId;
         std::string name;
-        while (std::getline(currentLine, value, '\t')) {
+        for (int i = 0; std::getline(currentLine, value, '\t'); ++i){
             if (i == principalsColumnMap["tconst"]) {
                 movieId = value;
             }
             if (i == principalsColumnMap["characters"]) {
                 name = value;
             }
-            ++i;
         }
         if (name.find("\"" + characterName + "\"") != std::string::npos) { //character names represented in files as ["name1", "name2", etc.]
             m_titles[movieId];
@@ -90,15 +87,14 @@ bool MovieTitles::findPrimaryTitleForMovies(const std::filesystem::path &path) {
         return false;
     }
 
-    while (std::getline(inputStream, line) && !m_titles.empty()) {
+    while (std::getline(inputStream, line)) {
         std::stringstream currentLine(line);
         std::string value;
-        std::size_t i = 0;
         std::string movieId;
         std::string isAdult;
         std::string movieTitle;
         std::string movieType;
-        while (std::getline(currentLine, value, '\t')) {
+        for (int i = 0; std::getline(currentLine, value, '\t'); ++i) {
             if (i == basicsColumnMap["tconst"]) {
                 movieId = value;
             }
@@ -111,7 +107,6 @@ bool MovieTitles::findPrimaryTitleForMovies(const std::filesystem::path &path) {
             if (i == basicsColumnMap["primaryTitle"]) {
                 movieTitle = value;
             }
-            ++i;
         }
         if (isAdult == "0" && movieType == "movie" && m_titles.find(movieId) != m_titles.end()) {
             m_titles[movieId] = movieTitle;
@@ -119,6 +114,7 @@ bool MovieTitles::findPrimaryTitleForMovies(const std::filesystem::path &path) {
             m_titles.erase(movieId);
         }
     }
+
     return true;
 }
 
@@ -137,14 +133,13 @@ bool MovieTitles::findLocalizedTitleForMovies(const std::filesystem::path &path)
         return false;
     }
 
-    while (std::getline(inputStream, line) && !m_titles.empty()) {
+    while (std::getline(inputStream, line)) {
         std::stringstream currentLine(line);
         std::string value;
-        std::size_t i = 0;
         std::string movieId;
         std::string movieTitle;
         std::string movieRegion;
-        while (std::getline(currentLine, value, '\t')) {
+        for (int i = 0; std::getline(currentLine, value, '\t'); ++i) {
             if (i == akas_column_map["titleId"]) {
                 movieId = value;
             }
@@ -154,12 +149,12 @@ bool MovieTitles::findLocalizedTitleForMovies(const std::filesystem::path &path)
             if (i == akas_column_map["region"]) {
                 movieRegion = value;
             }
-            ++i;
         }
         if (movieRegion == "RU" && m_titles.find(movieId) != m_titles.end()) {
             m_titles[movieId] = movieTitle;
         }
     }
+
     return true;
 }
 
@@ -168,13 +163,13 @@ void MovieTitles::printResult() {
         std::cerr << "No results found" << std::endl;
         return;
     }
-    for (const auto &container: m_titles) {
-        std::cout << container.second << std::endl;
+
+    for (const auto &it: m_titles) {
+        std::cout << it.second << std::endl;
     }
 }
 
-bool
-MovieTitles::findColumns(std::string &columns_naming_line, std::unordered_map<std::string, int> &columnNamesMap) {
+bool MovieTitles::findColumns(std::string &columns_naming_line, std::unordered_map<std::string, int> &columnNamesMap) {
     int indexOfColumn = 0;
     auto numberOfColumnsToFind = columnNamesMap.size();
     std::string columnName;
@@ -186,6 +181,7 @@ MovieTitles::findColumns(std::string &columns_naming_line, std::unordered_map<st
         }
         ++indexOfColumn;
     }
+
     return numberOfColumnsToFind == 0;
 }
 
@@ -196,5 +192,6 @@ bool MovieTitles::getInputStream(std::stringstream &input_stream, const std::fil
         return false;
     }
     input_stream << inputFileStream.rdbuf();
+
     return true;
 }
