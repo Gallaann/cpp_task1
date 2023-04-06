@@ -11,18 +11,22 @@
 #include <unordered_map>
 #include <vector>
 
+enum{
+    notFound = -1
+};
+
 namespace {
-    std::unordered_map<std::string, int> principals_column_map = {{"characters", -1},
-                                                                  {"tconst",     -1}};
+    std::unordered_map<std::string, int> principals_column_map = {{"characters", notFound},
+                                                                  {"tconst",     notFound}};
 
-    std::unordered_map<std::string, int> basics_column_map = {{"tconst",       -1},
-                                                              {"isAdult",      -1},
-                                                              {"titleType",    -1},
-                                                              {"primaryTitle", -1}};
+    std::unordered_map<std::string, int> basics_column_map = {{"tconst",       notFound},
+                                                              {"isAdult",      notFound},
+                                                              {"titleType",    notFound},
+                                                              {"primaryTitle", notFound}};
 
-    std::unordered_map<std::string, int> akas_column_map = {{"titleId", -1},
-                                                            {"title",   -1},
-                                                            {"region",  -1}};
+    std::unordered_map<std::string, int> akas_column_map = {{"titleId", notFound},
+                                                            {"title",   notFound},
+                                                            {"region",  notFound}};
 };
 
 bool MovieTitles::ParseID(const std::filesystem::path &path, const std::string &character_name) {
@@ -150,7 +154,7 @@ bool MovieTitles::ParseLocalizedTitle(const std::filesystem::path &path) {
 
 void MovieTitles::PrintResult() const {
     if (m_titles.empty()) {
-        std::cerr << "No results found." << std::endl;
+        std::cerr << "No results found" << std::endl;
         return;
     }
     for (const auto &container: m_titles) {
