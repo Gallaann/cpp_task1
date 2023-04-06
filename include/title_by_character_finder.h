@@ -12,14 +12,14 @@
 
 class MovieTitles {
 public:
-    bool findMovieIdByCharacterName(const std::filesystem::path &path, const std::string &character_name);
+    bool findMovieIdByCharacterName(const std::filesystem::path &path, const std::string &characterName);
     bool findPrimaryTitleForMovies(const std::filesystem::path &path);
     bool findLocalizedTitleForMovies(const std::filesystem::path &path);
     void printResult() const;
-    bool static findColumns(std::string &columns_naming_line, std::unordered_map<std::string, int> &column_names_map);
+    bool static findColumns(std::string &columns_naming_line, std::unordered_map<std::string, int> &columnNamesMap);
 
 private:
-    bool static getInputStream(std::stringstream &input_stream, const std::filesystem::path &path_to_file);
+    bool static getInputStream(std::stringstream &input_stream, const std::filesystem::path &path);
 
     std::unordered_map<std::string, std::string> m_titles;
 };
