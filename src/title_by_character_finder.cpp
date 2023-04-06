@@ -11,16 +11,28 @@
 #include <unordered_map>
 #include <vector>
 
+namespace {
+    std::unordered_map<std::string, int> principals_column_map = {{"characters", -1},
+                                                                  {"tconst",     -1}};
+
+    std::unordered_map<std::string, int> basics_column_map = {{"tconst",       -1},
+                                                              {"isAdult",      -1},
+                                                              {"titleType",    -1},
+                                                              {"primaryTitle", -1}};
+
+    std::unordered_map<std::string, int> akas_column_map = {{"titleId", -1},
+                                                            {"title",   -1},
+                                                            {"region",  -1}};
+};
+
 bool MovieTitles::ParseID(const std::filesystem::path &path, const std::string &character_name) {
     std::stringstream input_stream;
     getInputStream(input_stream, path);
 
-    std::unordered_map<std::string, int> column_map = {{"characters", 0},
-                                                       {"tconst",     0}};
     std::string line;
     std::getline(input_stream, line);
 
-    if (!findColumns(line, column_map)) {
+    if (!findColumns(line, principals_column_map)) {
         std::cerr << "Error: not enough columns in file." << std::endl;
         return false;
     }
@@ -32,10 +44,10 @@ bool MovieTitles::ParseID(const std::filesystem::path &path, const std::string &
         std::string movie_id;
         std::string name;
         while (std::getline(cur_line, value, '\t')) {
-            if (i == column_map["tconst"]) {
+            if (i == principals_column_map["tconst"]) {
                 movie_id = value;
             }
-            if (i == column_map["characters"]) {
+            if (i == principals_column_map["characters"]) {
                 name = value;
             }
             ++i;
@@ -56,13 +68,9 @@ bool MovieTitles::ParsePrimaryTitle(const std::filesystem::path &path) {
     std::stringstream input_stream;
     getInputStream(input_stream, path);
 
-    std::unordered_map<std::string, int> column_map = {{"tconst",       0},
-                                                       {"isAdult",      0},
-                                                       {"titleType",    0},
-                                                       {"primaryTitle", 0}};
     std::string line;
     std::getline(input_stream, line);
-    if (!findColumns(line, column_map)) {
+    if (!findColumns(line, basics_column_map)) {
         std::cerr << "Error: not enough columns in file." << std::endl;
         return false;
     }
@@ -76,16 +84,16 @@ bool MovieTitles::ParsePrimaryTitle(const std::filesystem::path &path) {
         std::string movie_title;
         std::string movie_type;
         while (std::getline(cur_line, value, '\t')) {
-            if (i == column_map["tconst"]) {
+            if (i == basics_column_map["tconst"]) {
                 movie_id = value;
             }
-            if (i == column_map["isAdult"]) {
+            if (i == basics_column_map["isAdult"]) {
                 is_adult = value;
             }
-            if (i == column_map["titleType"]) {
+            if (i == basics_column_map["titleType"]) {
                 movie_type = value;
             }
-            if (i == column_map["primaryTitle"]) {
+            if (i == basics_column_map["primaryTitle"]) {
                 movie_title = value;
             }
             ++i;
@@ -107,12 +115,9 @@ bool MovieTitles::ParseLocalizedTitle(const std::filesystem::path &path) {
     std::stringstream input_stream;
     getInputStream(input_stream, path);
 
-    std::unordered_map<std::string, int> column_map = {{"titleId", 0},
-                                                       {"title",   0},
-                                                       {"region",  0}};
     std::string line;
     std::getline(input_stream, line);
-    if (!findColumns(line, column_map)) {
+    if (!findColumns(line, akas_column_map)) {
         std::cerr << "Error: not enough columns in file." << std::endl;
         return false;
     }
@@ -125,13 +130,13 @@ bool MovieTitles::ParseLocalizedTitle(const std::filesystem::path &path) {
         std::string movie_title;
         std::string movie_region;
         while (std::getline(cur_line, value, '\t')) {
-            if (i == column_map["titleId"]) {
+            if (i == akas_column_map["titleId"]) {
                 movie_id = value;
             }
-            if (i == column_map["title"]) {
+            if (i == akas_column_map["title"]) {
                 movie_title = value;
             }
-            if (i == column_map["region"]) {
+            if (i == akas_column_map["region"]) {
                 movie_region = value;
             }
             ++i;
@@ -153,7 +158,8 @@ void MovieTitles::PrintResult() const {
     }
 }
 
-bool MovieTitles::findColumns(std::string &columns_naming_line, std::unordered_map<std::string, int> &column_names_map) {
+bool
+MovieTitles::findColumns(std::string &columns_naming_line, std::unordered_map<std::string, int> &column_names_map) {
     int index_of_column = 0;
     auto number_of_columns_to_find = column_names_map.size();
     std::string column_name;
