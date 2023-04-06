@@ -12,10 +12,10 @@
 
 class MovieTitles {
 public:
-    bool ParseID(const std::filesystem::path &path, const std::string &character_name);
-    bool ParsePrimaryTitle(const std::filesystem::path &path);
-    bool ParseLocalizedTitle(const std::filesystem::path &path);
-    void PrintResult() const;
+    bool findMovieIdByCharacterName(const std::filesystem::path &path, const std::string &character_name);
+    bool findPrimaryTitleForMovies(const std::filesystem::path &path);
+    bool findLocalizedTitleForMovies(const std::filesystem::path &path);
+    void printResult() const;
     bool static findColumns(std::string &columns_naming_line, std::unordered_map<std::string, int> &column_names_map);
 
 private:

@@ -29,7 +29,7 @@ namespace {
                                                             {"region",  notFound}};
 };
 
-bool MovieTitles::ParseID(const std::filesystem::path &path, const std::string &character_name) {
+bool MovieTitles::findMovieIdByCharacterName(const std::filesystem::path &path, const std::string &character_name) {
     std::stringstream input_stream;
     getInputStream(input_stream, path);
 
@@ -64,7 +64,7 @@ bool MovieTitles::ParseID(const std::filesystem::path &path, const std::string &
     return true;
 }
 
-bool MovieTitles::ParsePrimaryTitle(const std::filesystem::path &path) {
+bool MovieTitles::findPrimaryTitleForMovies(const std::filesystem::path &path) {
     if (m_titles.empty()) {
         return false;
     }
@@ -111,7 +111,7 @@ bool MovieTitles::ParsePrimaryTitle(const std::filesystem::path &path) {
     return true;
 }
 
-bool MovieTitles::ParseLocalizedTitle(const std::filesystem::path &path) {
+bool MovieTitles::findLocalizedTitleForMovies(const std::filesystem::path &path) {
     if (m_titles.empty()) {
         return false;
     }
@@ -152,7 +152,7 @@ bool MovieTitles::ParseLocalizedTitle(const std::filesystem::path &path) {
     return true;
 }
 
-void MovieTitles::PrintResult() const {
+void MovieTitles::printResult() const {
     if (m_titles.empty()) {
         std::cerr << "No results found" << std::endl;
         return;
