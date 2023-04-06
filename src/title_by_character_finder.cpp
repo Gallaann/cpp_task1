@@ -38,7 +38,7 @@ bool MovieTitles::ParseID(const std::filesystem::path &path, const std::string &
             if (i == column_map["characters"]) {
                 name = value;
             }
-            i++;
+            ++i;
         }
         if (name.find("\"" + character_name + "\"") != std::string::npos) {
             m_titles[movie_id];
@@ -88,7 +88,7 @@ bool MovieTitles::ParsePrimaryTitle(const std::filesystem::path &path) {
             if (i == column_map["primaryTitle"]) {
                 movie_title = value;
             }
-            i++;
+            ++i;
         }
         if (is_adult == "0" && movie_type == "movie" && m_titles.find(movie_id) != m_titles.end()) {
             m_titles[movie_id] = movie_title;
@@ -134,7 +134,7 @@ bool MovieTitles::ParseLocalizedTitle(const std::filesystem::path &path) {
             if (i == column_map["region"]) {
                 movie_region = value;
             }
-            i++;
+            ++i;
         }
         if (movie_region == "RU" && m_titles.find(movie_id) != m_titles.end()) {
             m_titles[movie_id] = movie_title;
@@ -161,9 +161,9 @@ bool MovieTitles::findColumns(std::string &columns_naming_line, std::unordered_m
     while (std::getline(columns_naming_line_stream, column_name, '\t')) {
         if (column_names_map.find(column_name) != column_names_map.end()) {
             column_names_map[column_name] = index_of_column;
-            number_of_columns_to_find--;
+            --number_of_columns_to_find;
         }
-        index_of_column++;
+        ++index_of_column;
     }
     return number_of_columns_to_find == 0;
 }
