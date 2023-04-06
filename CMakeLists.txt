@@ -1,30 +1,35 @@
 cmake_minimum_required(VERSION 3.24)
-project(Task1)
+set(PROJECT_NAME cpp_task1)
+project(${PROJECT_NAME}
+        LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(Task1 main.cpp)
+#add_subdirectory(include)
+add_subdirectory(src)
 
-add_library(title_by_character_finder src/title_by_character_finder.cpp)
+set (MAIN main.cpp)
+add_executable(${PROJECT_NAME} ${MAIN})
 
-target_include_directories(title_by_character_finder PUBLIC include)
+set(LIBRARY_NAME finder)
+target_include_directories(${LIBRARY_NAME} PUBLIC include)
 
-target_link_libraries(Task1 title_by_character_finder)
+target_link_libraries (${PROJECT_NAME} ${LIBRARY_NAME})
 
-function(AddValgrind target)
-    find_program(VALGRIND_PATH valgrind REQUIRED)
-    add_custom_target(valgrind
-            COMMAND ${VALGRIND_PATH} --leak-check=yes
-            $<TARGET_FILE:${target}>
-            WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-            )
-endfunction()
-
-if(WITH_VALGRIND)
-    find_program(VALGRIND_PATH valgrind REQUIRED)
-    add_custom_target(valgrind
-            COMMAND ${VALGRIND_PATH} --leak-check=yes --tool=memcheck
-            $<TARGET_FILE:${target}>
-            WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-            )
-endif()
+#function(AddValgrind target)
+#    find_program(VALGRIND_PATH valgrind REQUIRED)
+#    add_custom_target(valgrind
+#            COMMAND ${VALGRIND_PATH} --leak-check=yes
+#            $<TARGET_FILE:${target}>
+#            WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+#            )
+#endfunction()
+#
+#if(WITH_VALGRIND)
+#    find_program(VALGRIND_PATH valgrind REQUIRED)
+#    add_custom_target(valgrind
+#            COMMAND ${VALGRIND_PATH} --leak-check=yes --tool=memcheck
+#            $<TARGET_FILE:${target}>
+#            WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+#            )
+#endif()

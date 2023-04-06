@@ -51,22 +51,22 @@ jobs:
           name: build-artifact
           path: .
 
-  build_with_valgrind:
-    needs: [ build ]
-
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: checkout
-        uses: actions/checkout@v3
-
-      - name: build
-        run:
-          bash cmake -DWITH_VALGRIND=On
-          make
-
-      - name: upload-artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: my-artifact-valgrind
-          path: # some artifacts ${{ github.workflow }} ${{ github.workspace }}
+#  build_with_valgrind:
+#    needs: [ build ]
+#
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: checkout
+#        uses: actions/checkout@v3
+#
+#      - name: build
+#        run:
+#          bash cmake -DWITH_VALGRIND=On
+#          make
+#
+#      - name: upload-artifacts
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: my-artifact-valgrind
+#          path: # some artifacts ${{ github.workflow }} ${{ github.workspace }}
