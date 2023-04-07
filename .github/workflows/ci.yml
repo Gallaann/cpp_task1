@@ -51,17 +51,17 @@ jobs:
           name: build-artifact
           path: .
 
-    build_with_tests:
-      needs: [ build ]
+  build_with_tests:
+    needs: [ build ]
 
-      runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
 
-      steps:
-        - name: checkout
-          uses: actions/checkout@v3
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
 
-        - name: build
-          run: cmake -DBUILD_TESTS=ON -B ./build
+      - name: build
+        run: cmake -DBUILD_TESTS=ON -B ./build
 
 #  build_with_valgrind:
 #    needs: [ build ]
