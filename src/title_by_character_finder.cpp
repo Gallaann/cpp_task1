@@ -211,7 +211,7 @@ bool MovieTitles::findLocalizedTitleForMovies(const std::filesystem::path &path)
             }
         }
         if (movieRegion == "RU" && m_titles.find(movieId) != m_titles.end()) {
-            m_titles[movieId] = movieTitle;
+            m_titles.at(movieId) = movieTitle;
         }
     }
 
@@ -229,17 +229,15 @@ void MovieTitles::printResult() {
     }
 }
 
-bool MovieTitles::findColumns(std::string &columns_naming_line, std::unordered_map<std::string, int> &columnNamesMap) {
-    int indexOfColumn = 0;
+bool MovieTitles::findColumns(std::string &header, std::unordered_map<std::string, int> &columnNamesMap) {
     auto numberOfColumnsToFind = columnNamesMap.size();
     std::string columnName;
-    std::stringstream columnsNamingLineStream(columns_naming_line);
-    while (std::getline(columnsNamingLineStream, columnName, '\t')) {
+    std::stringstream columnsNamingLineStream(header);
+    for (int indexOfColumn = 0; std::getline(columnsNamingLineStream, columnName, '\t'); ++indexOfColumn) {
         if (columnNamesMap.find(columnName) != columnNamesMap.end()) {
             columnNamesMap[columnName] = indexOfColumn;
             --numberOfColumnsToFind;
         }
-        ++indexOfColumn;
     }
 
     return numberOfColumnsToFind == 0;

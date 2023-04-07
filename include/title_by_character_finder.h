@@ -18,7 +18,7 @@ public:
     bool findPrimaryTitleForMovies(const std::filesystem::path &path);
     bool findLocalizedTitleForMovies(const std::filesystem::path &path);
     void printResult();
-    bool findColumns(std::string &columns_naming_line, std::unordered_map<std::string, int> &columnNamesMap);
+    bool findColumns(std::string &header, std::unordered_map<std::string, int> &columnNamesMap);
 
 private:
     bool getInputStream(std::stringstream &input_stream, const std::filesystem::path &path);
