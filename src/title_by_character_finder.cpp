@@ -10,22 +10,31 @@
 #include <sstream>
 #include <unordered_map>
 
-enum{
+enum {
     kNotFound = -1
 };
 
+const std::string kTitleField = "title";
+const std::string kTitleIdField = "titleId";
+const std::string kRegionField = "region";
+const std::string kPrimaryTitleField = "primaryTitle";
+const std::string kTitleTypeField = "titleType";
+const std::string kIsAdultField = "isAdult";
+const std::string kTconstField = "tconst";
+const std::string kCharactersField = "characters";
+
 namespace {
-    std::unordered_map<std::string, int> principalsColumnMap = {{"characters", kNotFound},
-                                                                {"tconst",     kNotFound}};
+    std::unordered_map<std::string, int> principalsColumnMap = {{kCharactersField, kNotFound},
+                                                                {kTconstField,     kNotFound}};
 
-    std::unordered_map<std::string, int> basicsColumnMap = {{"tconst",       kNotFound},
-                                                            {"isAdult",      kNotFound},
-                                                            {"titleType",    kNotFound},
-                                                            {"primaryTitle", kNotFound}};
+    std::unordered_map<std::string, int> basicsColumnMap = {{kTconstField,       kNotFound},
+                                                            {kIsAdultField,      kNotFound},
+                                                            {kTitleTypeField,    kNotFound},
+                                                            {kPrimaryTitleField, kNotFound}};
 
-    std::unordered_map<std::string, int> akas_column_map = {{"titleId", kNotFound},
-                                                            {"title",   kNotFound},
-                                                            {"region",  kNotFound}};
+    std::unordered_map<std::string, int> akas_column_map = {{kTitleIdField, kNotFound},
+                                                            {kTitleField,   kNotFound},
+                                                            {kRegionField,  kNotFound}};
 };
 
 void MovieTitles::findLocalizedMoviesTitlesByCharacterName(int argc, char **argv) {
@@ -56,7 +65,7 @@ bool MovieTitles::findMovieIdByCharacterName(const std::filesystem::path &path, 
         std::string value;
         std::string movieId;
         std::string name;
-        for (int i = 0; std::getline(currentLine, value, '\t'); ++i){
+        for (int i = 0; std::getline(currentLine, value, '\t'); ++i) {
             if (i == principalsColumnMap["tconst"]) {
                 movieId = value;
             }
@@ -64,8 +73,8 @@ bool MovieTitles::findMovieIdByCharacterName(const std::filesystem::path &path, 
                 name = value;
             }
         }
-        if (name.find("\"" + characterName + "\"") != std::string::npos) { //character names represented in files as ["name1", "name2", etc.]
-            m_titles[movieId];
+        if (name.find("\"" + characterName + "\"") != std::string::npos) {  // character names represented in files as ["name1", "name2", etc.]
+            m_titles[movieId];  // make new pair with empty value field
         }
     }
 
