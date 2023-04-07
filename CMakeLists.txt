@@ -5,9 +5,6 @@ project(${PROJECT_NAME}
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_compile_options(--coverage)
-add_link_options(--coverage)
-
 add_subdirectory(src)
 
 set (MAIN main.cpp)
@@ -20,6 +17,9 @@ target_link_libraries (${PROJECT_NAME} ${LIBRARY_NAME})
 
 option(BUILD_TESTS "build tests" OFF)
 if(BUILD_TESTS)
+    add_compile_options(--coverage)
+    add_link_options(--coverage)
+
     enable_testing()
     include(FetchContent)
     FetchContent_Declare(

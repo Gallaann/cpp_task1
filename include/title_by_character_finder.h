@@ -12,6 +12,7 @@
 
 class MovieTitles {
 public:
+    std::unordered_map<std::string, std::string> splitNamedArguments(int argc, char *argv[]);
     void findLocalizedMoviesTitlesByCharacterName(int argc, char *argv[]);
     bool findMovieIdByCharacterName(const std::filesystem::path &path, const std::string &characterName);
     bool findPrimaryTitleForMovies(const std::filesystem::path &path);

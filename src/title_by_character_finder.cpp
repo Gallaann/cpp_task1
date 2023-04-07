@@ -37,14 +37,34 @@ namespace {
                                                             {kRegionField,  kNotFound}};
 };
 
+
+std::unordered_map<std::string, std::string> MovieTitles::splitNamedArguments(int argc, char **argv) {
+    std::unordered_map<std::string, std::string> arguments;
+
+    std::string name;
+    std::string value;
+
+    for (int i = 1; i < argc; ++i){
+        std::string one = argv[i];
+        if (one.find("=") != std::string::npos){
+            name = one.substr(0, one.find("="));
+            value = one.substr(one.find("=")+1, one.length()-1);
+            arguments.insert({name,value});
+        }
+    }
+    return arguments;
+}
+
 void MovieTitles::findLocalizedMoviesTitlesByCharacterName(int argc, char **argv) {
     if (argc != 5) {
         std::cerr << "Usage: " << argv[0] << " <file1> <file2> <file3> <name>" << std::endl;
     }
 
-    findMovieIdByCharacterName(argv[1], argv[4]);
-    findPrimaryTitleForMovies(argv[2]);
-    findLocalizedTitleForMovies(argv[3]);
+    auto arguments = splitNamedArguments(argc, argv);
+
+    findMovieIdByCharacterName(arguments.at("akas"), arguments.at("character"));
+    findPrimaryTitleForMovies(arguments.at("basics"));
+    findLocalizedTitleForMovies(arguments.at("principals"));
     printResult();
 }
 
