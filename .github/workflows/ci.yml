@@ -51,6 +51,24 @@ jobs:
           name: build-artifact
           path: .
 
+    build_with_tests:
+      needs: [ build ]
+
+      runs-on: ubuntu-latest
+
+      steps:
+        - name: checkout
+          uses: actions/checkout@v3
+
+        - name: build
+          run: cmake -B ./build
+
+        - name: upload-artifacts
+          uses: actions/upload-artifact@v3
+          with:
+            name: build-artifact
+            path: .
+
 #  build_with_valgrind:
 #    needs: [ build ]
 #

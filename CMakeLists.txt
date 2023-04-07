@@ -16,24 +16,19 @@ target_include_directories(${LIBRARY_NAME} PUBLIC include)
 
 target_link_libraries (${PROJECT_NAME} ${LIBRARY_NAME})
 
-include(FetchContent)
-FetchContent_Declare(
-        googletest
-        # Specify the commit you depend on and update it regularly.
-        URL https://github.com/google/googletest/archive/5376968f6948923e2411081fd9372e71a59d8e77.zip
-)
-# For Windows: Prevent overriding the parent project's compiler/linker settings
-set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-FetchContent_MakeAvailable(googletest)
+option(BUILD_TESTS "build tests")
+if(BUILD_TESTS)
+    include(FetchContent)
+    FetchContent_Declare(
+            googletest
+            URL https://github.com/google/googletest/archive/5376968f6948923e2411081fd9372e71a59d8e77.zip
+    )
 
-# Now simply link against gtest or gtest_main as needed. Eg
-add_executable(example tests/tests.cpp)
-target_link_libraries(example gtest_main)
-add_test(NAME example_test COMMAND example)
+    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+    FetchContent_MakeAvailable(googletest)
 
-add_subdirectory(tests)
-target_link_libraries (example ${LIBRARY_NAME})
-
+    add_subdirectory(tests)
+endif()
 
 #function(AddValgrind target)
 #    find_program(VALGRIND_PATH valgrind REQUIRED)
