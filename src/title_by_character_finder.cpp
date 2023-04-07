@@ -53,17 +53,21 @@ std::unordered_map<std::string, std::string> MovieTitles::splitNamedArguments(in
     std::string value;
 
     for (int i = 1; i < argc; ++i) {
-        std::string one = argv[i];
-        if (one.find('=') == std::string::npos) {
+        std::string oneArgument = argv[i];
+
+        if (oneArgument.find('=') == std::string::npos) {
             arguments.clear();
             return arguments;
         }
-        name = one.substr(0, one.find('='));
-        value = one.substr(one.find('=') + 1, one.length() - 1);
+
+        name = oneArgument.substr(0, oneArgument.find('='));
+        value = oneArgument.substr(oneArgument.find('=') + 1, oneArgument.length() - 1);
+
         if (arguments.find(name) == arguments.end()) {
             arguments.clear();
             return arguments;
         }
+
         arguments.at(name) = value;
     }
 
