@@ -14,6 +14,11 @@ enum {
     kNotFound = -1
 };
 
+const std::string kCharactersFileName = "principals";
+const std::string kPrimaryTitleFileName = "basics";
+const std::string kLocalizedTitleFileName = "akas";
+const std::string kCharacterName = "character";
+
 const std::string kTitleField = "title";
 const std::string kTitleIdField = "titleId";
 const std::string kRegionField = "region";
@@ -39,19 +44,29 @@ namespace {
 
 
 std::unordered_map<std::string, std::string> MovieTitles::splitNamedArguments(int argc, char **argv) {
-    std::unordered_map<std::string, std::string> arguments;
+    std::unordered_map<std::string, std::string> arguments = {{kCharactersFileName,     ""},
+                                                              {kPrimaryTitleFileName,   ""},
+                                                              {kLocalizedTitleFileName, ""},
+                                                              {kCharacterName,          ""}};
 
     std::string name;
     std::string value;
 
-    for (int i = 1; i < argc; ++i){
+    for (int i = 1; i < argc; ++i) {
         std::string one = argv[i];
-        if (one.find("=") != std::string::npos){
-            name = one.substr(0, one.find("="));
-            value = one.substr(one.find("=")+1, one.length()-1);
-            arguments.insert({name,value});
+        if (one.find('=') == std::string::npos) {
+            arguments.clear();
+            return arguments;
         }
+        name = one.substr(0, one.find('='));
+        value = one.substr(one.find('=') + 1, one.length() - 1);
+        if (arguments.find(name) == arguments.end()) {
+            arguments.clear();
+            return arguments;
+        }
+        arguments.at(name) = value;
     }
+
     return arguments;
 }
 
@@ -62,9 +77,20 @@ void MovieTitles::findLocalizedMoviesTitlesByCharacterName(int argc, char **argv
 
     auto arguments = splitNamedArguments(argc, argv);
 
-    findMovieIdByCharacterName(arguments.at("akas"), arguments.at("character"));
-    findPrimaryTitleForMovies(arguments.at("basics"));
-    findLocalizedTitleForMovies(arguments.at("principals"));
+    if (arguments.empty()) {
+        return;
+    }
+
+    if (!findMovieIdByCharacterName(arguments.at(kCharactersFileName), arguments.at(kCharacterName))) {
+        return;
+    };
+    if (!findPrimaryTitleForMovies(arguments.at(kPrimaryTitleFileName))) {
+        return;
+    }
+    if (!findLocalizedTitleForMovies(arguments.at(kLocalizedTitleFileName))) {
+        return;
+    }
+
     printResult();
 }
 
@@ -93,7 +119,8 @@ bool MovieTitles::findMovieIdByCharacterName(const std::filesystem::path &path, 
                 name = value;
             }
         }
-        if (name.find("\"" + characterName + "\"") != std::string::npos) {  // character names represented in files as ["name1", "name2", etc.]
+        if (name.find("\"" + characterName + "\"") !=
+            std::string::npos) {  // character names represented in files as ["name1", "name2", etc.]
             m_titles[movieId];  // make new pair with empty value field
         }
     }
