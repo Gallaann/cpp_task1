@@ -66,10 +66,10 @@ bool MovieTitles::findMovieIdByCharacterName(const std::filesystem::path &path, 
         std::string movieId;
         std::string name;
         for (int i = 0; std::getline(currentLine, value, '\t'); ++i) {
-            if (i == principalsColumnMap["tconst"]) {
+            if (i == principalsColumnMap.at(kTconstField)) {
                 movieId = value;
             }
-            if (i == principalsColumnMap["characters"]) {
+            if (i == principalsColumnMap.at(kCharactersField)) {
                 name = value;
             }
         }
@@ -104,16 +104,16 @@ bool MovieTitles::findPrimaryTitleForMovies(const std::filesystem::path &path) {
         std::string movieTitle;
         std::string movieType;
         for (int i = 0; std::getline(currentLine, value, '\t'); ++i) {
-            if (i == basicsColumnMap["tconst"]) {
+            if (i == basicsColumnMap.at(kTconstField)) {
                 movieId = value;
             }
-            if (i == basicsColumnMap["isAdult"]) {
+            if (i == basicsColumnMap.at(kIsAdultField)) {
                 isAdult = value;
             }
-            if (i == basicsColumnMap["titleType"]) {
+            if (i == basicsColumnMap.at(kTitleTypeField)) {
                 movieType = value;
             }
-            if (i == basicsColumnMap["primaryTitle"]) {
+            if (i == basicsColumnMap.at(kPrimaryTitleField)) {
                 movieTitle = value;
             }
         }
@@ -149,13 +149,13 @@ bool MovieTitles::findLocalizedTitleForMovies(const std::filesystem::path &path)
         std::string movieTitle;
         std::string movieRegion;
         for (int i = 0; std::getline(currentLine, value, '\t'); ++i) {
-            if (i == akas_column_map["titleId"]) {
+            if (i == akas_column_map.at(kTitleIdField)) {
                 movieId = value;
             }
-            if (i == akas_column_map["title"]) {
+            if (i == akas_column_map.at(kTitleField)) {
                 movieTitle = value;
             }
-            if (i == akas_column_map["region"]) {
+            if (i == akas_column_map.at(kRegionField)) {
                 movieRegion = value;
             }
         }

@@ -5,7 +5,9 @@ project(${PROJECT_NAME}
 
 set(CMAKE_CXX_STANDARD 17)
 
-#add_subdirectory(include)
+add_compile_options(--coverage)
+add_link_options(--coverage)
+
 add_subdirectory(src)
 
 set (MAIN main.cpp)
@@ -16,8 +18,9 @@ target_include_directories(${LIBRARY_NAME} PUBLIC include)
 
 target_link_libraries (${PROJECT_NAME} ${LIBRARY_NAME})
 
-option(BUILD_TESTS "build tests")
+option(BUILD_TESTS "build tests" OFF)
 if(BUILD_TESTS)
+    enable_testing()
     include(FetchContent)
     FetchContent_Declare(
             googletest
@@ -30,20 +33,20 @@ if(BUILD_TESTS)
     add_subdirectory(tests)
 endif()
 
-#function(AddValgrind target)
-#    find_program(VALGRIND_PATH valgrind REQUIRED)
-#    add_custom_target(valgrind
-#            COMMAND ${VALGRIND_PATH} --leak-check=yes
-#            $<TARGET_FILE:${target}>
-#            WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-#            )
-#endfunction()
-#
+#option(WITH_VALGRIND "build with valgrind")
+#set(WITH_VALGRIND ON)
 #if(WITH_VALGRIND)
-#    find_program(VALGRIND_PATH valgrind REQUIRED)
-#    add_custom_target(valgrind
-#            COMMAND ${VALGRIND_PATH} --leak-check=yes --tool=memcheck
-#            $<TARGET_FILE:${target}>
-#            WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-#            )
+##    include(CTest)
+#    enable_testing()
+##    find_program(VALGRIND_PATH valgrind REQUIRED)
+#    add_test(NAME valgrind
+#            COMMAND valgrind
+##            --error-exitcode=1
+#            --tool=memcheck
+#            --leak-check=full
+##            --errors-for-leak-kinds=definite
+#            --show-leak-kinds=all
+#            $<TARGET_FILE:${PROJECT_NAME}>
+##            $<TARGET_FILE:finder_test>
+#            WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR})
 #endif()
