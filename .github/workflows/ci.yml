@@ -61,13 +61,7 @@ jobs:
           uses: actions/checkout@v3
 
         - name: build
-          run: cmake -B ./build
-
-        - name: upload-artifacts
-          uses: actions/upload-artifact@v3
-          with:
-            name: build-artifact
-            path: .
+          run: cmake -DBUILD_TESTS=ON -B ./build
 
 #  build_with_valgrind:
 #    needs: [ build ]
