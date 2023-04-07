@@ -169,7 +169,7 @@ bool MovieTitles::findPrimaryTitleForMovies(const std::filesystem::path &path) {
             }
         }
         if (isAdult == "0" && movieType == "movie" && m_titles.find(movieId) != m_titles.end()) {
-            m_titles[movieId] = movieTitle;
+            m_titles.at(movieId) = movieTitle;
         } else {
             m_titles.erase(movieId);
         }
