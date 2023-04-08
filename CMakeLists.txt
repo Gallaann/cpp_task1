@@ -15,7 +15,8 @@ target_include_directories(${LIBRARY_NAME} PUBLIC include)
 
 target_link_libraries (${PROJECT_NAME} ${LIBRARY_NAME})
 
-option(BUILD_TESTS "build tests" OFF)
+option(BUILD_TESTS "build tests" ON)
+set(BUILD_TESTS ON)
 if(BUILD_TESTS)
     add_compile_options(--coverage)
     add_link_options(--coverage)

@@ -52,6 +52,11 @@ std::unordered_map<std::string, std::string> MovieTitles::splitNamedArguments(in
     std::string name;
     std::string value;
 
+    if (argc != 5) {
+        arguments.clear();
+        return arguments;
+    }
+
     for (int i = 1; i < argc; ++i) {
         std::string oneArgument = argv[i];
 
@@ -63,7 +68,7 @@ std::unordered_map<std::string, std::string> MovieTitles::splitNamedArguments(in
         name = oneArgument.substr(0, oneArgument.find('='));
         value = oneArgument.substr(oneArgument.find('=') + 1, oneArgument.length() - 1);
 
-        if (arguments.find(name) == arguments.end()) {
+        if (arguments.find(name) == arguments.end() || value.empty()) {
             arguments.clear();
             return arguments;
         }
@@ -75,10 +80,6 @@ std::unordered_map<std::string, std::string> MovieTitles::splitNamedArguments(in
 }
 
 void MovieTitles::findLocalizedMoviesTitlesByCharacterName(int argc, char **argv) {
-    if (argc != 5) {
-        std::cerr << "Usage: " << argv[0] << " <file1> <file2> <file3> <name>" << std::endl;
-    }
-
     auto arguments = splitNamedArguments(argc, argv);
 
     if (arguments.empty()) {
