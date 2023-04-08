@@ -73,31 +73,32 @@ jobs:
         run: |
           cmake -DBUILD_TESTS=ON -B ./build
           cmake --build ./build
-
-      - name: upload-artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: build-artifact
-          path: ${{ github.workflow }}/build
-
-  run_tests:
-    needs: [build_with_tests]
-
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: checkout
-        uses: actions/checkout@v3
-
-      - name: download build artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: build-artifact
-          path: ${{ github.workflow }}/build
-
-      - name: run tests
-        run: |
           ls
+
+#      - name: upload-artifacts
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: build-artifact
+#          path: ${{ github.workflow }}/build
+
+#  run_tests:
+#    needs: [build_with_tests]
+#
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: checkout
+#        uses: actions/checkout@v3
+#
+#      - name: download build artifact
+#        uses: actions/download-artifact@v3
+#        with:
+#          name: build-artifact
+#          path: ${{ github.workflow }}/build
+#
+#      - name: run tests
+#        run: |
+#          ls
 #          cd ${{ github.workflow }}/tests/
 #          chmod +x finder_test
 #          ./finder_test
