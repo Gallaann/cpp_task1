@@ -75,11 +75,11 @@ jobs:
           cmake --build ./build
           ls
 
-#      - name: upload-artifacts
-#        uses: actions/upload-artifact@v3
-#        with:
-#          name: build-artifact
-#          path: ${{ github.workflow }}/build
+      - name: upload-artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: test_build_artifact
+          path: ${{ github.workflow }}/build/
 
 #  run_tests:
 #    needs: [build_with_tests]
