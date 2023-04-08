@@ -105,6 +105,11 @@ jobs:
           chmod +x finder_test
           ./finder_test
 
+      - name: download lcov
+        run: |
+          sudo apt update
+          sudo apt install lcov
+
       - name: coverage
         run: |
           cd ${{ github.workflow }}/build/tests
