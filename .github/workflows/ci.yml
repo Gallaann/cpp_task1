@@ -60,12 +60,6 @@ jobs:
       - name: build
         run: cmake -B ./build
 
-      - name: upload-artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: build-artifact
-          path: .
-
   build_with_tests:
     needs: [ build ]
 
@@ -82,7 +76,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: build-artifact
-          path: ${{ github.workflow }}/build_with_tests
+          path: .
 
   run_tests:
     needs: [build_with_tests]
@@ -97,12 +91,12 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: build-artifact
-          path: ${{ github.workflow }}/build_with_tests
+          path: .
 
       - name: run tests
         run: |
-          cd ${{ github.workflow }}/build_with_tests/tests/
           ls
+#          cd ${{ github.workflow }}/tests/
 #          chmod +x finder_test
 #          ./finder_test
 
