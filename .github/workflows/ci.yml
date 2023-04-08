@@ -113,7 +113,7 @@ jobs:
       - name: coverage
         run: |
           cd ${{ github.workflow }}/build/tests
-          lcov -t . -o coverage.info -c -d /CMakeFiles/finder_test.dir.
+          lcov -t . -o coverage.info -c -d /CMakeFiles/finder_test.dir/
           genhtml -o report coverage.info
 
 
