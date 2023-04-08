@@ -87,7 +87,7 @@ jobs:
   run_tests:
     needs: [build_with_tests]
 
-    runs on: ubuntu-latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: checkout
