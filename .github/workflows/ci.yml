@@ -30,11 +30,25 @@ jobs:
       - name: run clang-tidy
         uses: cpp-linter/cpp-linter-action@v2.4.2
         with:
-          style: file
+          style: ''
           extra-args: -std=c++17
 
+  clang-format:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+
+      - name: run clang-tidy
+        uses: cpp-linter/cpp-linter-action@v2.4.2
+        with:
+          style: file
+          extra-args: -std=c++17
+          tidy-checks: '-*'
+
   build:
-    needs: [ cppcheck, clang-tidy ]
+    needs: [ cppcheck, clang-tidy, clang-format]
 
     runs-on: ubuntu-latest
 
