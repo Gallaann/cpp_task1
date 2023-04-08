@@ -101,10 +101,9 @@ jobs:
 
       - name: run tests
         run: |
-          ls
-#          cd ${{ github.workflow }}/build/
+          cd ${{ github.workflow }}/build/tests
+          ./finder_test
 #          chmod +x finder_test
-#          ./finder_test
 #
 #      - name: coverage
 #        run: |
