@@ -74,11 +74,14 @@ jobs:
           cmake -DBUILD_TESTS=ON -B ./build
           cmake --build ./build
 
+      - name: create directory for artifacts
+        run: mkdir artifacts
+
       - name: upload-artifacts
         uses: actions/upload-artifact@v3
         with:
           name: build-artifact
-          path: .
+          path: /artifacts
 
   run_tests:
     needs: [build_with_tests]
@@ -93,7 +96,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: build-artifact
-          path: .
+          path: /artifacts
 
       - name: run tests
         run: |
