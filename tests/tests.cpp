@@ -140,7 +140,7 @@ TEST(MovieByCharacterTest, NotEnoughColumns) {
 
 TEST(MovieByCharacterTest, EnoughColumns) {
     MovieTitles movieTitles{};
-    bool status = movieTitles.findMovieIdByCharacterName("../media/data3.tsv", "Self");
+    bool status = movieTitles.findMovieIdByCharacterName("../tests/test_principals.tsv", "Self");
     EXPECT_EQ(true, status);
 }
 
@@ -158,7 +158,7 @@ TEST(PrimaryTitleTest, NotEnoughColumns) {
 
 TEST(PrimaryTitleTest, EnoughColumns) {
     MovieTitles movieTitles{};
-    bool status = movieTitles.findPrimaryTitleForMovies("../media/data1.tsv");
+    bool status = movieTitles.findPrimaryTitleForMovies("../tests/test_basics.tsv");
     EXPECT_EQ(true, status);
 }
 
@@ -176,6 +176,6 @@ TEST(LocalizedTitleTest, NotEnoughColumns) {
 
 TEST(LocalizedTitleTest, EnoughColumns) {
     MovieTitles movieTitles{};
-    bool status = movieTitles.findLocalizedTitleForMovies("../media/data2.tsv");
+    bool status = movieTitles.findLocalizedTitleForMovies("../tests/test_akas.tsv");
     EXPECT_EQ(true, status);
 }
