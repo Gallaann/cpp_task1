@@ -74,14 +74,11 @@ jobs:
           cmake -DBUILD_TESTS=ON -B ./build
           cmake --build ./build
 
-      - name: create directory for artifacts
-        run: mkdir artifacts
-
       - name: upload-artifacts
         uses: actions/upload-artifact@v3
         with:
           name: build-artifact
-          path: /artifacts
+          path: /build/**/*
 
   run_tests:
     needs: [build_with_tests]
@@ -96,7 +93,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: build-artifact
-          path: /artifacts
+          path: /build
 
       - name: run tests
         run: |
@@ -105,11 +102,11 @@ jobs:
 #          chmod +x finder_test
 #          ./finder_test
 
-      - name: coverage
-        run: |
-          cd ${{ github.workflow }}/build_with_tests/
-          lcov -t . -o coverage.info -c -d .
-          genhtml -o report coverage.info   
+#      - name: coverage
+#        run: |
+#          cd ${{ github.workflow }}/build_with_tests/
+#          lcov -t . -o coverage.info -c -d .
+#          genhtml -o report coverage.info
 
 
 #  build_with_valgrind:
