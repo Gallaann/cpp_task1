@@ -78,7 +78,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: build-artifact
-          path: /build
+          path: ${{ github.workflow }}/build
 
   run_tests:
     needs: [build_with_tests]
@@ -93,7 +93,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: build-artifact
-          path: /build
+          path: ${{ github.workflow }}/build
 
       - name: run tests
         run: |
