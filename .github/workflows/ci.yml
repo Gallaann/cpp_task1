@@ -60,7 +60,7 @@ jobs:
       - name: build
         run: |
           cmake -B ${{ github.workflow }}/build
-          cmake --build ./build
+          cmake --build ${{ github.workflow }}/build
           ls
 
   build_with_tests:
@@ -75,7 +75,7 @@ jobs:
       - name: build
         run: |
           cmake -DBUILD_TESTS=ON -B ${{ github.workflow }}/build
-          cmake --build ./build
+          cmake --build ${{ github.workflow }}/build
           ls
 
       - name: upload-artifacts
